@@ -20,14 +20,6 @@ def backtrace(back, bp):
     # ADD YOUR CODE HERE
     # Extract the tree from the backpointers
 
-    # if length(bp) == 4: #preterminal rule
-    #     return tree for C, w
-    # elif length(bp) == 6: #binary rule
-    #     return tree for C, backtrace(left subtree), backtrace(rightsubtree)
-
-
-    # if not back: 
-    #     return None
     if len(back) == 6:
         (C, C1, C2, min_, mid_, max_) = back
         return [C, backtrace(bp[min_  , mid_, C1], bp),
@@ -63,7 +55,6 @@ def CKY(pcfg, norm_words):
         for min_ in range(max_- 2, -1, -1):
             for C in pcfg.binary_rules.keys():
                 best = 0
-                # backpointer = None
                 for C1,C2 in pcfg.binary_rules[C]:
                     for mid_ in range(min_ + 1, max_):
                         t1 = pi[(min_, mid_, C1)]
@@ -73,29 +64,10 @@ def CKY(pcfg, norm_words):
                             if candidate > best:
                                 best = candidate
                                 backpointer = (C, C1, C2, min_, mid_, max_)
-                    # if best > 0.0:
                 pi[(min_, max_, C)] = best
                 bp[(min_, max_, C)] = backpointer
             
     
-    
-    # for l in range(1, n):
-    #     for i in range(1, n-l+1):
-    #         j = i+l
-    #         for C in pcfg.N:
-    #         # Note that we only check rules that exist in training
-    #         # and have non-zero probability
-    #             score, back = argmax([(
-    #                     pcfg.q2[C, C1, C2] * pi[i, s, C1] * pi[s+1, j, C2],
-    #                     (C, C1, C2, i, s, j)
-    #                 ) for s in range(i, j)
-    #                     for C1, C2 in pcfg.binary_rules[C]
-    #                         if pi[i  , s, C1] > 0.0
-    #                         if pi[s+1, j, C2] > 0.0
-    #             ])
-                    
-    #             if score > 0.0:
-    #                 bp[i, j, X], pi[i, j, X] = back, score
         
     # Below is one option for retrieving the best trees, assuming we only want trees with the "S" category
     # This is a simplification, since not all sentences are of the category "S"
