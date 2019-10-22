@@ -1,0 +1,2 @@
+Time: (6682.04)s
+Total F1 scores: 0.726
